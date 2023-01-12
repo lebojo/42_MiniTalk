@@ -6,7 +6,7 @@
 /*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 01:08:39 by jchapell          #+#    #+#             */
-/*   Updated: 2023/01/05 18:31:26 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/01/12 21:49:30 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,32 +16,27 @@
 void	str_constructor(char c)
 {
 	static char	*res = NULL;
-	static int	index = 0;
+	static int	index;
 	char		*tmp;
 	int			i;
 	
-	if (!res)
-	{
-		res = malloc(sizeof(char));
-		*res = '\0';
-	}
 	i = 0;
-	while (res[i])
-		i++;
-	tmp = malloc(sizeof(char) * (i));
-	while (i >= 0)
+	tmp = malloc(index + 1);
+	while (res && res[i])
 	{
 		tmp[i] = res[i];
-		i--;
+		i++;
 	}
-	free(res);
-	res = malloc(sizeof(char) * (i + 2));
+	if (res)
+		free(res);
+	res = malloc(index + 1);
 	i = 0;
 	while (tmp[i])
 	{
 		res[i] = tmp[i];
 		i++;
 	}
+	free(tmp);
 	res[index++] = c;
 	res[index] = '\0';
 	if (c == 0)
@@ -85,7 +80,7 @@ int	main(void)
 
 	c = 0;
 	i = 0;
-	pid = itoa(getpid(), 10);
+	pid = itoa(getpid());
 	ft_putstr(3, "PID: ", pid, "\n");
 	free(pid);
 	while (1)

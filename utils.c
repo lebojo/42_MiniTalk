@@ -6,7 +6,7 @@
 /*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 01:13:23 by jchapell          #+#    #+#             */
-/*   Updated: 2023/01/05 18:26:05 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/01/12 21:37:53 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,34 +36,35 @@ int	ft_putstr(int nb, char *str, ...)
 	return (i);
 }
 
-char	*rev(char *str)
+int	intlen(int s)
 {
-	char	*res;
-	int		len;
-	int		i;
+	int	i;
 
-	len = 0;
 	i = 0;
-	while (str[len])
-		len++;
-	res = malloc(sizeof(char) * len + 1);
-	while (len-- >= 0)
-			res[i++] = str[len];
-	res[--i] = '\0';
-	free(str);
-	return(res);
+	if (s < 0)
+	{
+		s *= -1;
+		i++;
+	}
+	while (s > 9)
+	{
+		s /= 10;
+		i++;
+	}
+	return (i);
 }
 
-char	*itoa(int val, int base)
+char	*itoa(int val)
 {
 	char	*num;
 	char	*str;
 	int		i;
 	int		ii;
 
-	str = malloc(sizeof(char) * 32);
+	str = malloc(sizeof(char) * intlen(val) + 2);
 	num = "0123456789abcdef";
-	ii = 0;
+	ii = intlen(val) + 1;
+	str[ii] = '\0';
 	if (val < 0)
 	{
 		*str++ = '-';
@@ -72,10 +73,9 @@ char	*itoa(int val, int base)
 	i = val;
 	while (i)
 	{
-		str[ii++] = num[i % base];
-		i /= base;
+		str[--ii] = num[i % 10];
+		i /= 10;
 	}
-	str = rev(str);
 	return (str);
 }
 
