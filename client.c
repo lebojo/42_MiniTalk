@@ -51,9 +51,10 @@ void	send_message(int pid, char *str)
 
 int	main(int argc, char **argv)
 {
-	if (argc != 3)
-		return(ft_putstr(1, "Pas assez d'args"));
-	
+	if (argc < 3)
+		return(ft_putstr(1, "Not enough aarguments"));
+	else if (argc > 3)
+		return(ft_putstr(1, "Too many arguments"));
 	send_message(ft_atoi(argv[1]), argv[2]);
 	
 	while (1)
