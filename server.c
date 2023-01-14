@@ -13,30 +13,38 @@
 #include "prototype.h"
 #include <stdio.h>
 
+char	*str_init(int index, char *res)
+{
+	char	*tmp;
+	int		i;
+
+	i = 0;
+	if (index > 0)
+	{
+		tmp = malloc(sizeof(char) * index);
+		while (res != NULL && res[i])
+		{
+			tmp[i] = res[i];
+			i++;
+		}
+		free(res);
+		res = malloc(sizeof(char) * (index + 1));
+		i = -1;
+		while (tmp[++i])
+			res[i] = tmp[i];
+		free(tmp);
+	}
+	else
+		res = malloc(sizeof(char) * 2);
+	return(res);
+}
+
 void	str_constructor(char c)
 {
 	static char	*res = NULL;
 	static int	index = 0;
-	char		*tmp;
-	int			i;
-	
-	i = 0;
-	tmp = malloc(index);
-	while (res != NULL && res[i])
-	{
-		tmp[i] = res[i];
-		i++;
-	}
-	if (res != NULL) //== C'est pas le début d'un message
-		free(res);
-	res = malloc(index + 1);
-	i = 0;
-	while (tmp[i])
-	{
-		res[i] = tmp[i];
-		i++;
-	}
-	free(tmp);
+
+	res = str_init(index, res);
 	res[index++] = c;
 	res[index] = '\0';
 	if (c == 0)
