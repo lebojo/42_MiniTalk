@@ -6,7 +6,7 @@
 /*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 01:09:08 by jchapell          #+#    #+#             */
-/*   Updated: 2023/01/05 18:26:03 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/01/17 19:00:24 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,9 @@ void	send_message(int pid, char *str)
 	bit = 7;
 	while (str[++i])
 	{
-		while(bit >= 0)
+		while (bit >= 0)
 		{
-			if (str[i] >> bit & 1) // si le char, son bit a la place bit est 1
+			if (str[i] >> bit & 1)
 				kill(pid, SIGUSR1);
 			else
 				kill(pid, SIGUSR2);
@@ -52,11 +52,10 @@ void	send_message(int pid, char *str)
 int	main(int argc, char **argv)
 {
 	if (argc < 3)
-		return(ft_putstr(1, "Not enough aarguments"));
+		return (ft_putstr(1, "Not enough aarguments"));
 	else if (argc > 3)
-		return(ft_putstr(1, "Too many arguments"));
+		return (ft_putstr(1, "Too many arguments"));
 	send_message(ft_atoi(argv[1]), argv[2]);
-	
 	while (1)
 		pause();
 }

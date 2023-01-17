@@ -6,7 +6,7 @@
 /*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 01:08:39 by jchapell          #+#    #+#             */
-/*   Updated: 2023/01/17 18:44:49 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/01/17 19:30:53 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,48 +37,40 @@ char	*str_init(int index, char *res)
 		res = malloc(sizeof(char) * 2);
 	if (!res)
 		return (NULL);
-	return(res);
+	return (res);
 }
 
-void	str_constructor(char c)
+void	str_constructor(int bit)
 {
 	static char	*res = NULL;
 	static int	index = 0;
-
-	res = str_init(index, res);
-	res[index++] = c;
-	res[index] = '\0';
-	if (c == 0)
-	{
-		ft_putstr(1, res);
-		free(res);
-		res = NULL;
-		index = 0;
-	}
-}
-
-void	char_constructor(int bit)
-{
-	static char c = '0';
+	static char	c = '0';
 	static int	i = 0;
-	
+
 	c = (c << 1) | bit;
 	i++;
 	if (i == 8)
 	{
-		str_constructor(c);
 		i = 0;
+		res = str_init(index, res);
+		res[index++] = c;
+		res[index] = '\0';
+		if (c == 0)
+		{
+			ft_putstr(1, res);
+			free(res);
+			res = NULL;
+			index = 0;
+		}
 	}
 }
 
-void	one()
+void	define_bit(int sig)
 {
-	char_constructor(1);
-}
-
-void	zero()
-{
-	char_constructor(0);
+	if (sig == SIGUSR1)
+		str_constructor(1);
+	if (sig == SIGUSR2)
+		str_constructor(0);
 }
 
 int	main(void)
@@ -94,7 +86,7 @@ int	main(void)
 	free(pid);
 	while (1)
 	{
-		signal(SIGUSR1, &one);
-		signal(SIGUSR2, &zero);
+		signal(SIGUSR1, define_bit);
+		signal(SIGUSR2, define_bit);
 	}
 }

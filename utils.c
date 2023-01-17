@@ -6,7 +6,7 @@
 /*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 01:13:23 by jchapell          #+#    #+#             */
-/*   Updated: 2023/01/17 18:26:28 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/01/17 19:11:16 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,19 +32,18 @@ unsigned int	ft_strcpy(char *dst, const char *src)
 
 int	ft_putstr(int nb, char *str, ...)
 {
-	int	i;
-	char *tmp;
-	va_list l;
+	int		i;
+	char	*tmp;
+	va_list	l;
 
 	i = 0;
-
 	va_start(l, str);
 	while (str[i])
 		write(1, &str[i++], 1);
 	while (--nb)
 	{
 		i = 0;
-		tmp = va_arg(l, char*);
+		tmp = va_arg(l, char *);
 		if (tmp == NULL)
 			break ;
 		while (tmp[i])
