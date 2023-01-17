@@ -6,11 +6,29 @@
 /*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 01:13:23 by jchapell          #+#    #+#             */
-/*   Updated: 2023/01/12 21:37:53 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/01/17 18:26:28 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "prototype.h"
+
+unsigned int	ft_strcpy(char *dst, const char *src)
+{
+	unsigned int	i;
+	unsigned int	s;
+
+	i = 0;
+	s = 0;
+	while (src[s])
+		s++;
+	while (src[i])
+	{
+		dst[i] = src[i];
+		i++;
+	}
+	dst[i] = '\0';
+	return (s);
+}
 
 int	ft_putstr(int nb, char *str, ...)
 {

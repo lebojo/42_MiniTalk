@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   serveur.c                                          :+:      :+:    :+:   */
+/*   server.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 01:08:39 by jchapell          #+#    #+#             */
-/*   Updated: 2023/01/12 21:49:30 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/01/17 18:44:49 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,26 +16,27 @@
 char	*str_init(int index, char *res)
 {
 	char	*tmp;
-	int		i;
 
-	i = 0;
 	if (index > 0)
 	{
-		tmp = malloc(sizeof(char) * index);
-		while (res != NULL && res[i])
-		{
-			tmp[i] = res[i];
-			i++;
-		}
+		tmp = malloc(sizeof(char) * index + 1);
+		if (!tmp)
+			return (NULL);
+		ft_strcpy(tmp, res);
 		free(res);
-		res = malloc(sizeof(char) * (index + 1));
-		i = -1;
-		while (tmp[++i])
-			res[i] = tmp[i];
+		res = malloc(sizeof(char) * (index + 2));
+		if (!res)
+		{
+			free(tmp);
+			return (NULL);
+		}
+		ft_strcpy(res, tmp);
 		free(tmp);
 	}
 	else
 		res = malloc(sizeof(char) * 2);
+	if (!res)
+		return (NULL);
 	return(res);
 }
 
